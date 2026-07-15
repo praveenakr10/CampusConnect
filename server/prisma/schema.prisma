@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  STUDENT_ADMIN
+  SUPER_ADMIN
+}
+
+enum VoteTargetType {
+  QUESTION
+  ANSWER
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  reputation   Int      @default(0)
+  isBanned     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  questions      Question[]
+  answers        Answer[]
+  comments       Comment[]
+  votes          Vote[]
+  polls          Poll[]
+  pollVotes      PollVote[]
+  auditLogs      AuditLog[] @relation("AdminAuditLogs")
+}
+
+model Question {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  title          String
+  body           String
+  aiImprovedTitle String?
+  aiImprovedBody String?
+  viewCount      Int      @default(0)
+  isDeleted      Boolean  @default(false)
+  deletedById    String?
+  deletedReason  String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tags        QuestionTag[]
+  answers     Answer[]
+  summary     AnswerSummary?
+
+  @@index([isDeleted])
+}
+
+model Tag {
+  id        String        @id @default(uuid())
+  name      String        @unique
+  questions QuestionTag[]
+}
+
+model QuestionTag {
+  questionId String
+  tagId      String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([questionId, tagId])
+}
+
+model Answer {
+  id            String   @id @default(uuid())
+  questionId    String
+  question      Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  body          String
+  isDeleted     Boolean  @default(false)
+  deletedById   String?
+  createdAt     DateTime @default(now())
+
+  comments Comment[]
+
+  @@index([questionId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  answerId  String
+  answer    Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  body      String
+  createdAt DateTime @default(now())
+}
+
+// Polymorphic vote: targetType + targetId together point at either a
+// Question or an Answer. Deliberately NOT a Prisma relation (a single
+// column can't be a foreign key to two different tables), so referential
+// integrity for votes is enforced in application code instead.
+model Vote {
+  id         String         @id @default(uuid())
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  targetType VoteTargetType
+  targetId   String
+  createdAt  DateTime       @default(now())
+
+  @@unique([userId, targetType, targetId])
+}
+
+model Poll {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  questionText String
+  isAnonymous Boolean  @default(false)
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  options PollOption[]
+  votes   PollVote[]
+}
+
+model PollOption {
+  id         String @id @default(uuid())
+  pollId     String
+  poll       Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  optionText String
+  voteCount  Int    @default(0)
+
+  votes PollVote[]
+}
+
+model PollVote {
+  id       String     @id @default(uuid())
+  pollId   String
+  poll     Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User       @relation(fields: [userId], references: [id])
+  optionId String
+  option   PollOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, userId])
+}
+
+model AnswerSummary {
+  questionId             String   @id
+  question               Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  summaryText            String
+  generatedAt            DateTime @default(now())
+  answerCountAtGeneration Int
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  adminId    String
+  admin      User     @relation("AdminAuditLogs", fields: [adminId], references: [id])
+  actionType String
+  targetType String
+  targetId   String
+  reason     String?
+  createdAt  DateTime @default(now())
+}
