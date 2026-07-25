@@ -24,6 +24,9 @@ export default function Navbar() {
           <Link to="/polls" className="text-slate-600 hover:text-indigo-600">
             Polls
           </Link>
+          <Link to="/announcements" className="text-slate-600 hover:text-indigo-600">
+            Announcements
+          </Link>
 
           {user ? (
             <>

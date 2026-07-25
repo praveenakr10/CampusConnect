@@ -1,5 +1,6 @@
 function errorHandler(err, req, res, next) {
-  const statusCode = err.statusCode || 500;
+  const isUploadError = err.name === "MulterError" || /image files are allowed/i.test(err.message || "");
+  const statusCode = err.statusCode || (isUploadError ? 400 : 500);
   if (statusCode === 500) {
     console.error(err); // full stack trace for unexpected errors
   }

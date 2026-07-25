@@ -30,7 +30,7 @@ app.use("/api/votes", voteRoutes);
 app.use("/api/polls", pollRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/admin", adminRoutes);
-
+app.use("/uploads", express.static("uploads"));
 app.use((req, res) => res.status(404).json({ error: "Route not found." }));
 app.use(errorHandler);
 

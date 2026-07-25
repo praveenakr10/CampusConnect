@@ -35,6 +35,7 @@ model User {
   polls          Poll[]
   pollVotes      PollVote[]
   auditLogs      AuditLog[] @relation("AdminAuditLogs")
+  events Event[]
 }
 
 model Question {
@@ -167,4 +168,32 @@ model AuditLog {
   targetId   String
   reason     String?
   createdAt  DateTime @default(now())
+}
+model Event {
+  id            String   @id @default(uuid())
+  title         String
+  eventDate     DateTime
+  venue         String
+  clubName      String
+  posterUrl     String?
+  additionalDetails String?
+  postedById    String
+  postedBy      User     @relation(fields: [postedById], references: [id])
+  isDeleted     Boolean  @default(false)
+  deletedById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  coordinators  EventCoordinator[]
+
+  @@index([eventDate])
+  @@index([isDeleted])
+}
+
+model EventCoordinator {
+  id      String @id @default(uuid())
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name    String
+  contact String?  // phone or email, optional
 }
