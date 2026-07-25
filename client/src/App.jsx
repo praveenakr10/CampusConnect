@@ -42,6 +42,16 @@ export default function App() {
               </RequireAuth>
             }
           />
+          <Route path="/announcements" element={<AnnouncementsPage />} />
+          <Route path="/announcements/:id" element={<EventDetailPage />} />
+          <Route
+            path="/announcements/new"
+            element={
+              <RequireAdmin>
+                <CreateEventPage />
+              </RequireAdmin>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route
