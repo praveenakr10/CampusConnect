@@ -27,7 +27,7 @@ export default function HomeFeed() {
     <div>
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
         <h1 className="text-xl font-bold">Community Questions</h1>
-        <Link to="/ask" className="text-sm text-indigo-600 hover:underline">
+        <Link to="/ask" className="text-sm text-ink-800 hover:underline">
           Have a question? Ask it →
         </Link>
       </div>
@@ -45,7 +45,7 @@ export default function HomeFeed() {
               key={s.value}
               onClick={() => setSort(s.value)}
               className={`text-xs px-3 py-1.5 rounded-md ${
-                sort === s.value ? "bg-indigo-600 text-white" : "bg-white border border-slate-200 text-slate-600"
+                sort === s.value ? "bg-gold-600 text-white" : "bg-white border border-slate-200 text-slate-600"
               }`}
             >
               {s.label}

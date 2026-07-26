@@ -55,7 +55,7 @@ export default function QuestionForm() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. Why does my React state update twice?"
-          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
         />
       </div>
 
@@ -66,7 +66,7 @@ export default function QuestionForm() {
           onChange={(e) => setBody(e.target.value)}
           rows={6}
           placeholder="Explain your problem in detail, include any error messages or code..."
-          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function QuestionForm() {
           value={tags}
           onChange={(e) => setTags(e.target.value)}
           placeholder="react, javascript, css"
-          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
         />
       </div>
 

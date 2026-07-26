@@ -30,7 +30,7 @@ export default function UpvoteButton({ targetType, targetId, initialUpvotes }) {
       onClick={handleClick}
       disabled={busy}
       className={`flex flex-col items-center px-3 py-2 rounded-md border text-sm transition ${
-        upvoted ? "border-indigo-400 bg-indigo-50 text-indigo-600" : "border-slate-200 text-slate-500 hover:border-indigo-300"
+        upvoted ? "border-gold-400 bg-gold-50 text-ink-800" : "border-slate-200 text-slate-500 hover:border-gold-300"
       }`}
     >
       <span className="text-lg leading-none">▲</span>

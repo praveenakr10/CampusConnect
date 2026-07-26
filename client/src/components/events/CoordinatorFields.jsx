@@ -34,7 +34,7 @@ export default function CoordinatorFields({ coordinators, setCoordinators }) {
           </div>
         ))}
       </div>
-      <button type="button" onClick={add} className="text-indigo-600 text-xs mt-2 hover:underline">
+      <button type="button" onClick={add} className="text-ink-800 text-xs mt-2 hover:underline">
         + Add coordinator
       </button>
     </div>

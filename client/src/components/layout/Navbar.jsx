@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import CrestLogo from "../common/CrestLogo";
+import Avatar from "../common/Avatar";
 
 export default function Navbar() {
   const { user, logout, isAdmin } = useAuth();
@@ -11,46 +13,50 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <nav className="bg-ink-900 sticky top-0 z-10">
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link to="/" className="font-bold text-indigo-600 text-lg">
+        <Link to="/" className="flex items-center gap-2 font-display font-semibold text-white text-lg">
+          <CrestLogo size={20} />
           CampusQ&A
         </Link>
 
-        <div className="flex items-center gap-4 text-sm">
-          <Link to="/" className="text-slate-600 hover:text-indigo-600">
+        <div className="flex items-center gap-6 text-sm">
+          <Link to="/" className="text-ink-200 hover:text-gold-300 px-1">
             Questions
           </Link>
-          <Link to="/polls" className="text-slate-600 hover:text-indigo-600">
+          <Link to="/polls" className="text-ink-200 hover:text-gold-300 px-1">
             Polls
           </Link>
-          <Link to="/announcements" className="text-slate-600 hover:text-indigo-600">
+          <Link to="/announcements" className="text-ink-200 hover:text-gold-300 px-1">
             Announcements
           </Link>
 
           {user ? (
             <>
-              <Link to="/ask" className="bg-indigo-600 text-white px-3 py-1.5 rounded-md hover:bg-indigo-700">
+              <Link to="/ask" className="bg-gold-500 text-ink-900 font-medium px-3 py-1.5 rounded-md hover:bg-gold-400">
                 Ask
               </Link>
               {isAdmin && (
-                <Link to="/admin" className="text-slate-600 hover:text-indigo-600">
+                <Link to="/admin" className="text-ink-200 hover:text-gold-300 px-1">
                   Admin
                 </Link>
               )}
-              <span className="text-slate-500 hidden sm:inline">
-                {user.name} · {user.reputation} rep
-              </span>
-              <button onClick={handleLogout} className="text-slate-500 hover:text-red-600">
+              <Link to={`/profile/${user.id}`} className="hidden sm:flex items-center gap-2 text-ink-200 hover:text-gold-300">
+                <Avatar name={user.name} sizePx={26} />
+                <span>
+                  {user.name} · {user.reputation} rep
+                </span>
+              </Link>
+              <button onClick={handleLogout} className="text-ink-300 hover:text-red-300">
                 Log out
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-slate-600 hover:text-indigo-600">
+              <Link to="/login" className="text-ink-200 hover:text-gold-300 px-1">
                 Log in
               </Link>
-              <Link to="/signup" className="bg-indigo-600 text-white px-3 py-1.5 rounded-md hover:bg-indigo-700">
+              <Link to="/signup" className="bg-gold-500 text-ink-900 font-medium px-3 py-1.5 rounded-md hover:bg-gold-400">
                 Sign up
               </Link>
             </>

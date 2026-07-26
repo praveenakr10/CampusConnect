@@ -14,6 +14,7 @@ const pollRoutes = require("./routes/poll.routes");
 const aiRoutes = require("./routes/ai.routes");
 const adminRoutes = require("./routes/admin.routes");
 const eventRoutes = require("./routes/event.routes");
+const userRoutes = require("./routes/user.routes");
 const app = express();
 
 app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
@@ -25,6 +26,7 @@ app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/answers", answerRoutes);
 app.use("/api/votes", voteRoutes);

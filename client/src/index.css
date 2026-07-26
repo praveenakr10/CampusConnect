@@ -1,9 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --brand: #4f46e5;
+/*
+  CampusQ&A design tokens.
+  ink   = deep collegiate navy, used for structure (nav, headings, body text)
+  gold  = warm ochre accent, reserved for primary actions and "you did this"
+          states (upvoted, your poll pick, active tab) so it stays meaningful
+          rather than decorative
+  paper = cool off-white page background (cards stay pure white on top of it)
+*/
+@theme {
+  --color-ink-50: #eef1f6;
+  --color-ink-100: #dce2ec;
+  --color-ink-200: #b9c4d9;
+  --color-ink-300: #8fa0c0;
+  --color-ink-400: #5e7099;
+  --color-ink-500: #3e5178;
+  --color-ink-700: #24365c;
+  --color-ink-800: #182848;
+  --color-ink-900: #101b33;
+
+  --color-gold-50: #faf3e4;
+  --color-gold-100: #f2e0bc;
+  --color-gold-200: #e7c583;
+  --color-gold-300: #d9a853;
+  --color-gold-400: #c68f35;
+  --color-gold-500: #a97527;
+  --color-gold-600: #8c611f;
+  --color-gold-700: #714d19;
+
+  --color-paper: #f3f5f9;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-paper text-ink-900;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }

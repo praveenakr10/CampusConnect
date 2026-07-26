@@ -58,7 +58,7 @@ export default function LoginPage() {
         </Button>
       </form>
       <p className="text-center text-sm text-slate-500 mt-4">
-        No account? <Link to="/signup" className="text-indigo-600 hover:underline">Sign up</Link>
+        No account? <Link to="/signup" className="text-ink-800 hover:underline">Sign up</Link>
       </p>
       <p className="text-center text-xs text-slate-400 mt-2">
         Seeded demo login: student@college.edu / password123

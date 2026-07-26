@@ -31,13 +31,13 @@ export default function AdminPage() {
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setTab("users")}
-          className={`text-sm px-3 py-1.5 rounded-md ${tab === "users" ? "bg-indigo-600 text-white" : "bg-white border border-slate-200"}`}
+          className={`text-sm px-3 py-1.5 rounded-md ${tab === "users" ? "bg-gold-600 text-white" : "bg-white border border-slate-200"}`}
         >
           Users ({users.length})
         </button>
         <button
           onClick={() => setTab("logs")}
-          className={`text-sm px-3 py-1.5 rounded-md ${tab === "logs" ? "bg-indigo-600 text-white" : "bg-white border border-slate-200"}`}
+          className={`text-sm px-3 py-1.5 rounded-md ${tab === "logs" ? "bg-gold-600 text-white" : "bg-white border border-slate-200"}`}
         >
           Audit Log ({logs.length})
         </button>

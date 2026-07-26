@@ -16,7 +16,7 @@ export default function PollsPage() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-bold">Community Polls</h1>
-        <Link to="/polls/new" className="text-sm text-indigo-600 hover:underline">
+        <Link to="/polls/new" className="text-sm text-ink-800 hover:underline">
           Create a poll →
         </Link>
       </div>

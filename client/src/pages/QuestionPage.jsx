@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Tag from "../components/common/Tag";
 import Loader from "../components/common/Loader";
+import Avatar from "../components/common/Avatar";
 import UpvoteButton from "../components/common/UpvoteButton";
 import Button from "../components/common/Button";
 import AnswerCard from "../components/answers/AnswerCard";
@@ -68,8 +69,15 @@ export default function QuestionPage() {
                 <Tag key={tag.id}>{tag.name}</Tag>
               ))}
             </div>
-            <div className="text-xs text-slate-400">
-              asked by {question.user?.name} · {timeAgo(question.createdAt)} · {question.viewCount} views
+            <div className="text-xs text-slate-400 inline-flex items-center gap-1 flex-wrap">
+              asked by{" "}
+              {question.user && (
+                <Link to={`/profile/${question.user.id}`} className="inline-flex items-center gap-1.5 hover:text-ink-800">
+                  <Avatar name={question.user.name} sizePx={18} />
+                  {question.user.name}
+                </Link>
+              )}{" "}
+              · {timeAgo(question.createdAt)} · {question.viewCount} views
             </div>
           </div>
         </div>

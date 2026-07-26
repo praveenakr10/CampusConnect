@@ -45,11 +45,11 @@ export default function PollDetail({ poll: initialPoll, myVote: initialMyVote })
               onClick={() => handleVote(option.id)}
               disabled={!!myVote || expired}
               className={`w-full text-left border rounded-md p-3 relative overflow-hidden ${
-                isMine ? "border-indigo-400" : "border-slate-200"
-              } ${!myVote && !expired ? "hover:border-indigo-300 cursor-pointer" : "cursor-default"}`}
+                isMine ? "border-gold-400" : "border-slate-200"
+              } ${!myVote && !expired ? "hover:border-gold-300 cursor-pointer" : "cursor-default"}`}
             >
               <div
-                className="absolute inset-y-0 left-0 bg-indigo-50"
+                className="absolute inset-y-0 left-0 bg-gold-50"
                 style={{ width: `${pct}%`, zIndex: 0 }}
               />
               <div className="relative z-10 flex items-center justify-between text-sm">

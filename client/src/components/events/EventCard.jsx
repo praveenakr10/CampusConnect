@@ -15,7 +15,7 @@ export default function EventCard({ event }) {
   return (
     <Link
       to={`/announcements/${event.id}`}
-      className="block bg-white border border-slate-200 rounded-lg overflow-hidden hover:border-indigo-300 transition"
+      className="block bg-white border border-slate-200 rounded-lg overflow-hidden hover:border-gold-300 transition"
     >
       <div className="aspect-[16/9] bg-slate-100 flex items-center justify-center overflow-hidden">
         {event.posterUrl ? (
@@ -29,7 +29,7 @@ export default function EventCard({ event }) {
           <h3 className="font-semibold text-slate-800 line-clamp-1">{event.title}</h3>
           {isPast && <span className="text-xs bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md shrink-0">Past</span>}
         </div>
-        <p className="text-xs text-indigo-600 font-medium">{event.clubName}</p>
+        <p className="text-xs text-ink-800 font-medium">{event.clubName}</p>
         <p className="text-xs text-slate-500 mt-1">
           {formatEventDate(event.eventDate)} · {event.venue}
         </p>

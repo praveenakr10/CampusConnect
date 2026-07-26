@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { deleteEvent } from "../../api/events.api";
+import Avatar from "../common/Avatar";
 
 function formatEventDate(dateStr) {
   return new Date(dateStr).toLocaleString(undefined, {
@@ -35,7 +36,7 @@ export default function EventDetail({ event }) {
         <div className="flex items-start justify-between gap-2">
           <div>
             <h1 className="text-xl font-bold text-slate-800">{event.title}</h1>
-            <p className="text-sm text-indigo-600 font-medium mt-1">{event.clubName}</p>
+            <p className="text-sm text-ink-800 font-medium mt-1">{event.clubName}</p>
           </div>
           {isAdmin && (
             <button onClick={handleDelete} className="text-xs text-red-500 hover:underline shrink-0">
@@ -76,7 +77,15 @@ export default function EventDetail({ event }) {
           </div>
         )}
 
-        <p className="text-xs text-slate-400 mt-6">Posted by {event.postedBy?.name}</p>
+        <p className="text-xs text-slate-400 mt-6 inline-flex items-center gap-1">
+          Posted by{" "}
+          {event.postedBy && (
+            <Link to={`/profile/${event.postedBy.id}`} className="inline-flex items-center gap-1.5 hover:text-ink-800">
+              <Avatar name={event.postedBy.name} sizePx={18} />
+              {event.postedBy.name}
+            </Link>
+          )}
+        </p>
       </div>
     </div>
   );

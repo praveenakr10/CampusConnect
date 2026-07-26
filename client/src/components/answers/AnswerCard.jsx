@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import UpvoteButton from "../common/UpvoteButton";
 import Button from "../common/Button";
+import Avatar from "../common/Avatar";
 import { deleteAnswer, addComment } from "../../api/answers.api";
 import { timeAgo } from "../../utils/format";
 
@@ -35,11 +37,17 @@ export default function AnswerCard({ answer, onDeleted, onCommentAdded }) {
       <div className="flex-1 min-w-0">
         <p className="text-sm text-slate-700 whitespace-pre-wrap">{answer.body}</p>
         <div className="flex items-center justify-between mt-3 text-xs text-slate-400">
-          <span>
-            {answer.user?.name} · {timeAgo(answer.createdAt)}
+          <span className="inline-flex items-center gap-1">
+            {answer.user && (
+              <Link to={`/profile/${answer.user.id}`} className="inline-flex items-center gap-1.5 hover:text-ink-800">
+                <Avatar name={answer.user.name} sizePx={18} />
+                {answer.user.name}
+              </Link>
+            )}{" "}
+            · {timeAgo(answer.createdAt)}
           </span>
           <div className="flex gap-3">
-            <button onClick={() => setShowCommentBox((s) => !s)} className="hover:text-indigo-600">
+            <button onClick={() => setShowCommentBox((s) => !s)} className="hover:text-ink-800">
               Comment
             </button>
             {canDelete && (

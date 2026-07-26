@@ -23,7 +23,7 @@ export default function AnnouncementsPage() {
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
         <h1 className="text-xl font-bold">Announcements</h1>
         {isAdmin && (
-          <Link to="/announcements/new" className="text-sm text-indigo-600 hover:underline">
+          <Link to="/announcements/new" className="text-sm text-ink-800 hover:underline">
             + Post an event
           </Link>
         )}
@@ -32,13 +32,13 @@ export default function AnnouncementsPage() {
       <div className="flex gap-1 mb-4">
         <button
           onClick={() => setShowPast(false)}
-          className={`text-xs px-3 py-1.5 rounded-md ${!showPast ? "bg-indigo-600 text-white" : "bg-white border border-slate-200 text-slate-600"}`}
+          className={`text-xs px-3 py-1.5 rounded-md ${!showPast ? "bg-gold-600 text-white" : "bg-white border border-slate-200 text-slate-600"}`}
         >
           Upcoming
         </button>
         <button
           onClick={() => setShowPast(true)}
-          className={`text-xs px-3 py-1.5 rounded-md ${showPast ? "bg-indigo-600 text-white" : "bg-white border border-slate-200 text-slate-600"}`}
+          className={`text-xs px-3 py-1.5 rounded-md ${showPast ? "bg-gold-600 text-white" : "bg-white border border-slate-200 text-slate-600"}`}
         >
           All events
         </button>

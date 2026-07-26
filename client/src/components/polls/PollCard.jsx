@@ -8,7 +8,7 @@ export default function PollCard({ poll }) {
   return (
     <Link
       to={`/polls/${poll.id}`}
-      className="block bg-white border border-slate-200 rounded-lg p-4 hover:border-indigo-300 transition"
+      className="block bg-white border border-slate-200 rounded-lg p-4 hover:border-gold-300 transition"
     >
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold text-slate-800">{poll.questionText}</h3>
