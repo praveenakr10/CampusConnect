@@ -1,5 +1,9 @@
 require("dotenv").config();
 
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET must be set in the server environment.");
+}
+
 function parseDurationMs(value, fallbackMs) {
   if (!value) return fallbackMs;
   const match = /^(\d+)([smhd])$/.exec(value.trim());
@@ -12,11 +16,11 @@ function parseDurationMs(value, fallbackMs) {
 
 module.exports = {
   PORT: process.env.PORT || 5000,
-  JWT_SECRET: process.env.JWT_SECRET || "dev-secret-change-me",
+  JWT_SECRET: process.env.JWT_SECRET,
   JWT_ACCESS_EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN || process.env.JWT_EXPIRES_IN || "1h",
   JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
   JWT_REFRESH_EXPIRES_IN_MS: parseDurationMs(process.env.JWT_REFRESH_EXPIRES_IN || "7d", 7 * 86_400_000),
-  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  CLIENT_ORIGIN: process.env.CLIENT_ORIGIN,
 
   EMAIL_FROM: process.env.EMAIL_FROM || "CampusQ&A <noreply@localhost>",
   RESEND_API_KEY: process.env.RESEND_API_KEY || "",
@@ -32,6 +36,8 @@ module.exports = {
   CLOUDINARY_FOLDER: process.env.CLOUDINARY_FOLDER || "campusqna/event-posters",
   GROQ_API_KEY: process.env.GROQ_API_KEY || "",
   GROQ_MODEL: process.env.GROQ_MODEL || "llama-3.1-8b-instant",
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY || "",
+  GEMINI_MODEL: process.env.GEMINI_MODEL || "gemini-1.5-flash",
 
   SUMMARY_ANSWER_THRESHOLD: Number(process.env.SUMMARY_ANSWER_THRESHOLD || 10),
   SUMMARY_REGEN_THRESHOLD: Number(process.env.SUMMARY_REGEN_THRESHOLD || 5),

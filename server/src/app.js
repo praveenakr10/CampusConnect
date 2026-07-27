@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const morgan = require("morgan");
 
 const { CLIENT_ORIGIN } = require("./config/env");
@@ -17,6 +18,11 @@ const eventRoutes = require("./routes/event.routes");
 const userRoutes = require("./routes/user.routes");
 const app = express();
 
+if (!CLIENT_ORIGIN) {
+  throw new Error("CLIENT_ORIGIN must be set in the server environment.");
+}
+
+app.use(helmet());
 app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan("dev"));

@@ -18,6 +18,7 @@ function sanitizeUser(user) {
     emailVerificationExpiresAt,
     passwordResetTokenHash,
     passwordResetExpiresAt,
+    refreshTokens,
     ...safe
   } = user;
   return safe;
