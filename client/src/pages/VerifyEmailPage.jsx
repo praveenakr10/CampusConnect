@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Loader from "../components/common/Loader";
 import ErrorBanner from "../components/common/ErrorBanner";
@@ -9,6 +9,7 @@ export default function VerifyEmailPage() {
   const token = searchParams.get("token");
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
+  const verificationStarted = useRef(false);
 
   useEffect(() => {
     if (!token) {
@@ -16,6 +17,11 @@ export default function VerifyEmailPage() {
       setMessage("Missing verification token.");
       return;
     }
+
+    // React StrictMode re-runs effects in development. Verification tokens are
+    // single-use, so only send this request once for the mounted page.
+    if (verificationStarted.current) return;
+    verificationStarted.current = true;
 
     verifyEmail(token)
       .then((data) => {
