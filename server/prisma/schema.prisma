@@ -26,6 +26,11 @@ model User {
   role         Role     @default(STUDENT)
   reputation   Int      @default(0)
   isBanned     Boolean  @default(false)
+  emailVerified              Boolean   @default(false)
+  emailVerificationTokenHash String?
+  emailVerificationExpiresAt DateTime?
+  passwordResetTokenHash     String?
+  passwordResetExpiresAt     DateTime?
   createdAt    DateTime @default(now())
 
   questions      Question[]
@@ -35,7 +40,19 @@ model User {
   polls          Poll[]
   pollVotes      PollVote[]
   auditLogs      AuditLog[] @relation("AdminAuditLogs")
-  events Event[]
+  events         Event[]
+  refreshTokens  RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model Question {

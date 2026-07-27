@@ -23,20 +23,23 @@ export function AuthProvider({ children }) {
       })
       .catch(() => {
         localStorage.removeItem("qna_token");
+        localStorage.removeItem("qna_refresh_token");
         localStorage.removeItem("qna_user");
         setUser(null);
       })
       .finally(() => setLoading(false));
   }, []);
 
-  const login = (user, token) => {
+  const login = (user, token, refreshToken) => {
     localStorage.setItem("qna_token", token);
+    localStorage.setItem("qna_refresh_token", refreshToken);
     localStorage.setItem("qna_user", JSON.stringify(user));
     setUser(user);
   };
 
   const logout = () => {
     localStorage.removeItem("qna_token");
+    localStorage.removeItem("qna_refresh_token");
     localStorage.removeItem("qna_user");
     setUser(null);
   };

@@ -1,12 +1,15 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, JWT_EXPIRES_IN } = require("../config/env");
+const { JWT_SECRET, JWT_ACCESS_EXPIRES_IN } = require("../config/env");
 
-function signToken(payload) {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+function signAccessToken(payload) {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRES_IN });
 }
 
 function verifyToken(token) {
   return jwt.verify(token, JWT_SECRET);
 }
 
-module.exports = { signToken, verifyToken };
+// Backward-compatible alias used by existing imports.
+const signToken = signAccessToken;
+
+module.exports = { signAccessToken, signToken, verifyToken };
