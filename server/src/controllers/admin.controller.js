@@ -21,6 +21,7 @@ const banUser = asyncHandler(async (req, res) => {
   const target = await prisma.user.findUnique({ where: { id: userId } });
   if (!target) throw new ApiError(404, "User not found.");
   if (target.role === "SUPER_ADMIN") throw new ApiError(403, "Cannot ban a super admin.");
+  if (target.role === "DEMO") throw new ApiError(403, "The demo account cannot be modified.");
 
   await prisma.user.update({ where: { id: userId }, data: { isBanned: true } });
   await logAdminAction({
@@ -36,6 +37,9 @@ const banUser = asyncHandler(async (req, res) => {
 
 const unbanUser = asyncHandler(async (req, res) => {
   const { userId } = req.params;
+  const target = await prisma.user.findUnique({ where: { id: userId } });
+  if (!target) throw new ApiError(404, "User not found.");
+  if (target.role === "DEMO") throw new ApiError(403, "The demo account cannot be modified.");
   await prisma.user.update({ where: { id: userId }, data: { isBanned: false } });
   await logAdminAction({
     adminId: req.user.id,
@@ -60,6 +64,9 @@ const promoteUser = asyncHandler(async (req, res) => {
   if (!["STUDENT", "STUDENT_ADMIN", "SUPER_ADMIN"].includes(role)) {
     throw new ApiError(400, "Invalid role.");
   }
+  const target = await prisma.user.findUnique({ where: { id: userId } });
+  if (!target) throw new ApiError(404, "User not found.");
+  if (target.role === "DEMO") throw new ApiError(403, "The demo account cannot be modified.");
   const updated = await prisma.user.update({ where: { id: userId }, data: { role } });
   await logAdminAction({
     adminId: req.user.id,

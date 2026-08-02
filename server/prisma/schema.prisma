@@ -11,11 +11,18 @@ enum Role {
   STUDENT
   STUDENT_ADMIN
   SUPER_ADMIN
+  DEMO
 }
 
 enum VoteTargetType {
   QUESTION
   ANSWER
+}
+
+enum UsageType {
+  API
+  UPLOAD
+  AI
 }
 
 model User {
@@ -42,6 +49,21 @@ model User {
   auditLogs      AuditLog[] @relation("AdminAuditLogs")
   events         Event[]
   refreshTokens  RefreshToken[]
+  dailyUsages    DailyUsage[]
+}
+
+model DailyUsage {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      UsageType
+  day       DateTime
+  count     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([userId, type, day])
+  @@index([day])
 }
 
 model RefreshToken {

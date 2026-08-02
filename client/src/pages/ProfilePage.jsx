@@ -10,6 +10,7 @@ const ROLE_LABELS = {
   STUDENT: "Student",
   STUDENT_ADMIN: "Student Admin",
   SUPER_ADMIN: "Super Admin",
+  DEMO: "Demo account",
 };
 
 export default function ProfilePage() {

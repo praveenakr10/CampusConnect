@@ -160,7 +160,8 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const normalizedEmail = email.toLowerCase().trim();
   const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
 
-  if (user) {
+  // Demo credentials are shared and must remain stable.
+  if (user && user.role !== "DEMO") {
     const rawToken = generateSecureToken();
     const tokenHash = hashToken(rawToken);
     await prisma.user.update({
@@ -190,6 +191,9 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   if (!user || !user.passwordResetExpiresAt || user.passwordResetExpiresAt < new Date()) {
     throw new ApiError(400, "Password reset link is invalid or has expired.");
+  }
+  if (user.role === "DEMO") {
+    throw new ApiError(403, "The demo account password cannot be changed.");
   }
 
   const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
