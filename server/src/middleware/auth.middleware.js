@@ -51,8 +51,7 @@ const optionalAuth = asyncHandler(async (req, res, next) => {
       throw new ApiError(403, "The demo account cannot delete data.");
     }
     req.user = user;
-    await demoDailyApiLimit(req, res, next);
-    return;
+    return next();
   }
   next();
 });
