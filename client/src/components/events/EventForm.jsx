@@ -25,6 +25,10 @@ export default function EventForm() {
       setError("Poster must be an image file.");
       return;
     }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Poster must be 5 MB or smaller.");
+      return;
+    }
     setError("");
     setPosterFile(file);
     setPosterPreview(URL.createObjectURL(file));
@@ -62,17 +66,33 @@ export default function EventForm() {
       <ErrorBanner message={error} />
 
       <div>
-        <label className="block text-sm font-medium mb-1">Event Poster</label>
-        <div className="flex items-center gap-4">
-          <div className="w-32 h-20 bg-slate-100 rounded-md overflow-hidden flex items-center justify-center shrink-0">
+        <label className="block text-sm font-medium mb-2">Event Poster <span className="font-normal text-slate-500">(optional)</span></label>
+        <label
+          htmlFor="event-poster"
+          className="group flex cursor-pointer items-center gap-4 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-3 transition hover:border-indigo-400 hover:bg-indigo-50/50 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-200"
+        >
+          <div className="h-24 w-20 overflow-hidden rounded-md bg-white ring-1 ring-slate-200 flex items-center justify-center shrink-0">
             {posterPreview ? (
               <img src={posterPreview} alt="Poster preview" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-xs text-slate-400">Preview</span>
+              <svg aria-hidden="true" className="h-8 w-8 text-slate-400 group-hover:text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <circle cx="8.5" cy="9" r="1.5" />
+                <path d="m21 15-4.5-4.5L8 19" />
+              </svg>
             )}
           </div>
-          <input type="file" accept="image/*" onChange={handlePosterChange} className="text-sm" />
-        </div>
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-slate-700 group-hover:text-indigo-700">
+              {posterFile ? "Replace poster" : "Upload a poster"}
+            </span>
+            <span className="mt-1 block truncate text-sm text-slate-500">
+              {posterFile?.name || "PNG, JPG, WEBP, or another image format"}
+            </span>
+            <span className="mt-1 block text-xs text-slate-400">Maximum file size: 5 MB</span>
+          </span>
+          <input id="event-poster" type="file" accept="image/*" onChange={handlePosterChange} className="sr-only" />
+        </label>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">

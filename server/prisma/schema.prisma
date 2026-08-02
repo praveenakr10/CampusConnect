@@ -193,6 +193,7 @@ model Event {
   venue         String
   clubName      String
   posterUrl     String?
+  posterPublicId String?
   additionalDetails String?
   postedById    String
   postedBy      User     @relation(fields: [postedById], references: [id])

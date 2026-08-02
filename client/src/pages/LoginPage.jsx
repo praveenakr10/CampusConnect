@@ -95,7 +95,7 @@ export default function LoginPage() {
         No account? <Link to="/signup" className="text-ink-800 hover:underline">Sign up</Link>
       </p>
       <p className="text-center text-xs text-slate-400 mt-2">
-        Seeded demo login: student@college.edu / password123
+        Demo login: student@college.edu / password123
       </p>
     </div>
   );

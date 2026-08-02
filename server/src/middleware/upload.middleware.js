@@ -1,13 +1,7 @@
 const multer = require("multer");
-const path = require("path");
-
-const storage = multer.diskStorage({
-  destination: "uploads/posters",
-  filename: (req, file, cb) => {
-    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, unique + path.extname(file.originalname));
-  },
-});
+// Event posters are streamed directly to Cloudinary by the controller.
+// memoryStorage supplies req.file.buffer; diskStorage only supplies a path.
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
